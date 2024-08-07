@@ -1,9 +1,9 @@
 # lib/helpers.py
-
-def helper_1():
-    print("Performing useful function#1.")
+from models.bucket import Bucket
+from models.item import Item
 
 
 def exit_program():
     print("Goodbye!")
     exit()
+
