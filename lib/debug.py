@@ -19,6 +19,7 @@ def reset_database():
     Item.create("Italy", "Visit for a week.", travel.id)
     Item.create("Front-End Developer", "This is one of my dream jobs", job.id)
     Item.create("Back-end Developer", "One of the jobs id like to have", job.id)
+    
 
 reset_database()
 ipdb.set_trace()
