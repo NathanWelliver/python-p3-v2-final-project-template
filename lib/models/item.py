@@ -1,6 +1,6 @@
 # lib/models/items.py
 from models.__init__ import CURSOR, CONN
-from lib.models.bucket import Bucket
+from models.bucket import Bucket
 
 class Item:
 
