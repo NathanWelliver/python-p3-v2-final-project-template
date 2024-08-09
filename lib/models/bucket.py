@@ -43,7 +43,7 @@ class Bucket:
             INSERT INTO buckets (name)
             VALUES (?)
         """
-        CURSOR.execute(sql, (self.name))
+        CURSOR.execute(sql, (self.name,))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -76,7 +76,7 @@ class Bucket:
         self.id = None
     
     @classmethod
-    def instance_fro_db(cls, row):
+    def instance_from_db(cls, row):
         bucket = cls.all.get(row[0])
         if bucket:
             bucket.name = row[1]
@@ -93,7 +93,7 @@ class Bucket:
             FROM buckets
         """
         rows = CURSOR.execute(sql).fetchall()
-        return [cls.instance_fro_db(row) for row in rows]
+        return [cls.instance_from_db(row) for row in rows]
     
     @classmethod
     def find_by_id(cls, id):
@@ -103,17 +103,17 @@ class Bucket:
             WHERE id = ?
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.instance_fro_db(row) if row else None
+        return cls.instance_from_db(row) if row else None
     
     @classmethod
     def find_by_name(cls, name):
         sql = """
             SELECT *
             FROM buckets
-            WHERE name is ?
+            WHERE name = ?
         """
         row = CURSOR.execute(sql, (name,)).fetchone()
-        return cls.instance_fro_db(row) if row else None
+        return cls.instance_from_db(row) if row else None
     
     def items(self):
         from models.item import Item
@@ -121,8 +121,6 @@ class Bucket:
             SELECT * FROM items
             WHERE bucket_id = ?
         """
-        CURSOR.execute(sql, (self.id))
+        CURSOR.execute(sql, (self.id,))
         rows = CURSOR.fetchall()
-        return [
-            Item.instance_from_db(row) for row in rows
-        ]
+        return [Item.instance_from_db(row) for row in rows]
